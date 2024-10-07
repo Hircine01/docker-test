@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  flame:
+    image: pawelmalak/flame:latest
+    container_name: flame
+    volumes:
+      - .:/app/data
+    ports:
+      - 5005:5005
+    environment:
+      - PASSWORD=flame_password
+    restart: unless-stopped
+
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /Data/heimdall/config:/config
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
